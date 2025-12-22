@@ -1,0 +1,93 @@
+"use client";
+import { useState } from "react";
+import { Title } from "../_components/title";
+import { ArticleIcon } from "../_icons/articleIcon";
+
+type MyProps = {
+  generateFinished: () => void;
+};
+
+export const ArticleGenerator = ({ generateFinished }: MyProps) => {
+  const [articleTitle, setArticleTitle] = useState("");
+  const [artcileContent, setArticleContent] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const returnArticle = async () => {
+    if (!articleTitle) return;
+    if (!artcileContent) return;
+    setLoading(true);
+    try {
+      await (
+        await fetch("/api/articles", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: articleTitle,
+            content: artcileContent,
+            userId: "test1",
+          }),
+        })
+      ).json();
+    } catch (err) {
+      console.error(err, "error from client");
+    } finally {
+      setLoading(false);
+      generateFinished();
+    }
+  };
+
+  return (
+    <div className="w-full h-full bg-zinc-100 flex justify-center pt-12">
+      <div className="w-[856px] h-[458px] border border-zinc-200 bg-white rounded-lg p-7 flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
+          <Title title="Article Quiz Generator" />
+          <p className="text-zinc-400 text-[16px] font-normal">
+            Paste your article below to generate a summarize and quiz question.
+            Your articles will saved in the
+            <br /> sidebar for future reference.
+          </p>
+        </div>
+        <div className="flex flex-col gap-1">
+          <p className="flex items-center text-zinc-400 text-[14px] font-semibold gap-1">
+            <ArticleIcon />
+            Article title
+          </p>
+          <textarea
+            className="outline-none border border-zinc-200 w-[800px] min-h-10 max-h-10 rounded-lg text-[14px] font-normal text-black flex justify-start px-3 py-2"
+            placeholder="Enter a title for your article..."
+            onChange={(e) => setArticleTitle(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <p className="flex items-center text-zinc-400 text-[14px] font-semibold gap-1">
+            <ArticleIcon />
+            Article content
+          </p>
+          <textarea
+            className="outline-none border border-zinc-200 w-[800px] min-h-[120px] max-h-[385px] rounded-lg text-[14px] font-normal text-black flex justify-start px-3 py-2 resize-none"
+            placeholder="Paste your article content here..."
+            // onInput={(e) => {
+            //   const target = e.target as HTMLTextAreaElement;
+            //   target.style.height = "auto";
+            //   target.style.height = `${target.scrollHeight}px`;
+            // }}
+            onChange={(e) => setArticleContent(e.target.value)}
+          />
+        </div>
+        <div className="w-[800px] flex items-center justify-end">
+          <button
+            className={`w-40 h-10 rounded-lg flex items-center justify-center cursor-pointer text-[14px] text-white font-medium ${
+              artcileContent.length > 0 && articleTitle.length > 0
+                ? "bg-black"
+                : "bg-zinc-200"
+            } ${loading === true && "bg-red-500"}`}
+            onClick={returnArticle}
+          >
+            Generate summary
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
