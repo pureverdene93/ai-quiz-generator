@@ -46,3 +46,6 @@ next-env.d.ts
 /.clerk/
 .env*.local
 generated/
+/app/generated/prisma
+
+/app/generated/prisma

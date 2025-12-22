@@ -1,7 +1,7 @@
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../lib/prisma";
 // import type { WebhookEvent } from "@clerk/nextjs/server";
-import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   // const payload = await req.text();

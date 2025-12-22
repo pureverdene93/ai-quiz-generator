@@ -1,5 +1,5 @@
-import prisma from "@/lib/prisma";
 import { GoogleGenAI } from "@google/genai";
+import prisma from "../../lib/prisma";
 
 const geminiApi = new GoogleGenAI({
   apiKey: process.env.GEMINI_TOKEN,
