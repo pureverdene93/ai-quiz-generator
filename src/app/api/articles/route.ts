@@ -23,14 +23,6 @@ export const POST = async (req: Request) => {
     });
     const summarizedContent =
       res?.candidates?.[0]?.content?.parts?.[0].text ?? "";
-    // console.log(
-    //   typeof summarizedContent,
-    //   "summarized content krtghieurhgiuehriguheiruhgiueqhrgiuheriuhgiuerhgiuheriuhg"
-    // );
-    // console.log(
-    //   summarizedContent,
-    //   "summarized content krtghieurhgiuehriguheiruhgiueqhrgiuheriuhgiuerhgiuheriuhg"
-    // );
     const create = await prisma.article.create({
       data: {
         title: title,

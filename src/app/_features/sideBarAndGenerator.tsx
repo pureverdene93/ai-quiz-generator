@@ -11,6 +11,8 @@ export const SideBarAndGenerator = () => {
   const [sideBarState, setSideBarState] = useState(false);
   const [step, setStep] = useState(1);
 
+  console.log("---step", step, step === 2);
+
   return (
     <div className="flex w-full h-full">
       <div
@@ -37,10 +39,10 @@ export const SideBarAndGenerator = () => {
           takeTest={() => setStep(3)}
         />
       )}
-      {step === 3 && <QuickTest seeResult={() => setStep(4)} />}
+      {/* {step === 3 && <QuickTest seeResult={() => setStep(4)} />}
       {step === 4 && (
         <TestResult backToHome={() => setStep(1)} restart={() => setStep(3)} />
-      )}
+      )} */}
     </div>
   );
 };

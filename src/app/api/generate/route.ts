@@ -97,7 +97,10 @@ ${articleContent}`;
           articleId: articleId,
         })),
       });
-      return NextResponse.json({ create }, { status: 200 });
+      const quizzes = await prisma.quiz.findMany({
+        where: { articleId },
+      });
+      return NextResponse.json({ quizzes }, { status: 200 });
     } catch (err) {
       console.log(err);
       return NextResponse.json({ err }, { status: 500 });

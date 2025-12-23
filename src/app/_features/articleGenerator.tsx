@@ -18,17 +18,15 @@ export const ArticleGenerator = ({ generateFinished }: MyProps) => {
     if (!artcileContent) return;
     setLoading(true);
     try {
-      await (
-        await fetch("/api/articles", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title: articleTitle,
-            content: artcileContent,
-            userId: "test1",
-          }),
-        })
-      ).json();
+      await fetch("/api/articles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: articleTitle,
+          content: artcileContent,
+          userId: "test1",
+        }),
+      });
     } catch (err) {
       console.error(err, "error from client");
     } finally {

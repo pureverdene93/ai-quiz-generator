@@ -6,20 +6,21 @@ import { PreButton } from "../_components/preButton";
 import { SummarizedIcon } from "@/app/_icons/summarizedIcon";
 import { ArticleIcon } from "@/app/_icons/articleIcon";
 import { ContextHistory } from "@/app/_components/contentHistory";
+import { useRouter } from "next/navigation";
 
-type Article = [
-  {
-    title: string;
-    content: string;
-    summary: string;
-  }
-];
+type Article = {
+  title: string;
+  content: string;
+  summary: string;
+}[];
 
 export const Contents = () => {
   const [articleData, setArticleData] = useState<Article | []>([]);
-  //   const [loading, setLoading] = useState(true);
+  const [quizData, setQuizData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [state, setState] = useState(false);
   const params = useParams();
+  const router = useRouter();
   const { id } = params;
 
   const fetchData = async () => {
@@ -37,6 +38,32 @@ export const Contents = () => {
       console.log(err);
     }
   };
+  const quizGenerator = async () => {
+    const artcile = articleData[0];
+    if (!artcile) return;
+    console.log(artcile, "i use this");
+    setLoading(true);
+    try {
+      const data = await (
+        await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            articleTitle: artcile.title,
+            articleContent: artcile.content,
+            articleId: id,
+          }),
+        })
+      ).json();
+      setQuizData(data);
+      router.push(`/quizzes/${id}`);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  console.log(quizData, "quiz data is here");
 
   useEffect(() => {
     fetchData();
@@ -48,7 +75,7 @@ export const Contents = () => {
       <div className="w-[628px] flex justify-start">
         <PreButton />
       </div>
-      <div className="w-[628px] h-fit max-h-[540px] bg-white rounded-lg flex flex-col p-7 border border-zinc-200 gap-5">
+      <div className="w-[628px] h-fit max-h-[600px] bg-white rounded-lg flex flex-col p-7 border border-zinc-200 gap-5">
         <Title title="Article Quiz Generator" />
         <div className="flex flex-col gap-2">
           <p className="flex items-center text-zinc-400 text-[14px] font-semibold gap-1">
@@ -62,7 +89,6 @@ export const Contents = () => {
               </p>
             );
           })}
-
           {articleData.map((data, index) => {
             return (
               <div
@@ -109,7 +135,10 @@ export const Contents = () => {
               })}
           </div>
         </div>
-        <button className="w-[124px] h-10 bg-black rounded-lg text-white cursor-pointer flex items-center justify-center text-[14px] font-medium">
+        <button
+          className="w-[124px] h-10 bg-black rounded-lg text-white cursor-pointer flex items-center justify-center text-[14px] font-medium"
+          onClick={quizGenerator}
+        >
           Take a quiz
         </button>
       </div>

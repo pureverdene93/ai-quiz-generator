@@ -22,7 +22,6 @@ export const GeneratedArticle = ({ goPrev, takeTest }: MyProps) => {
   const [quiz, setQuiz] = useState([]);
   const [loading, setLoading] = useState(false);
   const [articleData, setArticleData] = useState<ArticleData | null>(null);
-  if (!articleData) return;
   const [quizData, setQuizData] = useState([]);
 
   const fetchData = async () => {
@@ -74,6 +73,8 @@ export const GeneratedArticle = ({ goPrev, takeTest }: MyProps) => {
     fetchData();
     fetchQuizData();
   }, []);
+
+  if (!articleData) return;
 
   return (
     <div className="w-full h-full flex flex-col bg-zinc-100 pt-12 items-center gap-6">
