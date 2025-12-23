@@ -1,6 +1,6 @@
-import prisma from "@/app/lib/prisma";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../../../lib/prisma";
 
 // import type { WebhookEvent } from "@clerk/nextjs/server";
 
@@ -30,10 +30,8 @@ export async function POST(req: NextRequest) {
   //   return new NextResponse("Invalid signature", { status: 400 });
   // }
   // console.log(event, "event");
-
   if (event.type === "user.created") {
     const user = event.data;
-
     await prisma.user.create({
       data: {
         clerkId: user.id,
