@@ -26,6 +26,23 @@ export const QuickTestFromHistory = ({
   loading,
 }: MyProps) => {
   const [restartQuizState, setRestartQuizState] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleSelect = (option: string) => {
+    setSelectedOption(option);
+    const stored = localStorage.getItem("quick test");
+    const prev = stored ? JSON.parse(stored) : [];
+    const result = {
+      question: data.question,
+      yourAnswer: option,
+      correctAnswer: data.answer,
+      correct: data.answer === option,
+    };
+    localStorage.setItem("quick test", JSON.stringify([...prev, result]));
+    onNext();
+  };
+  console.log(selectedOption, "local storage data");
+
   return (
     <div className="w-full h-full bg-zinc-100 flex justify-center pt-[120px]">
       <div className="w-[558px] h-72 gap-5 flex flex-col">
@@ -47,16 +64,16 @@ export const QuickTestFromHistory = ({
           )}
         </div>
         {loading === true ? (
-          <div className="bg-white h-fit w-fit rounded-lg border border-zinc-200 p-7 flex flex-col gap-5">
-            <div className="flex items-center gap-12 w-full">
+          <div className="bg-white h-fit w-[558px] rounded-lg border border-zinc-200 p-7 flex flex-col gap-5">
+            <div className="flex items-center gap-12 w-full justify-between">
               <Skeleton className="w-[350px] h-[30px]" />
               <Skeleton className="w-8 h-[30px]" />
             </div>
-            <div className="flex flex-wrap justify-between gap-y-4">
-              <Skeleton className="w-[243px] h-10" />
-              <Skeleton className="w-[243px] h-10" />
-              <Skeleton className="w-[243px] h-10" />
-              <Skeleton className="w-[243px] h-10" />
+            <div className="flex flex-col gap-y-4 w-full">
+              <Skeleton className="w-full h-10" />
+              <Skeleton className="w-full h-10" />
+              <Skeleton className="w-full h-10" />
+              <Skeleton className="w-full h-10" />
             </div>
           </div>
         ) : (
@@ -72,13 +89,14 @@ export const QuickTestFromHistory = ({
                 </span>
               </p>
             </div>
-            <div className="flex flex-wrap justify-between gap-y-4">
+            <div className="flex flex-col gap-y-4">
               {data?.options.map((options, index) => {
                 return (
                   <button
-                    className="w-[243px] h-10 rounded-lg border border-zinc-200 flex cursor-pointer justify-center items-center text-black text-[14px] font-medium"
                     key={index}
-                    onClick={onNext}
+                    onClick={() => handleSelect(options)}
+                    className="min-w-[243px] h-10 px-4 rounded-lg border border-zinc-200 text-black text-[14px] font-medium flex items-center justify-center 
+                    transition-all duration-300 ease-out bg-white hover:bg-black hover:text-white hover:border-black hover:-translate-y-0.5  hover:shadow-[0_10px_25px_-10px_rgba(0,0,0,0.35)] active:translate-y-0 active:scale-[0.98]"
                   >
                     {options}
                   </button>

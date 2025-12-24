@@ -14,8 +14,8 @@ export const QuizSection = () => {
   const [sideBarState, setSideBarState] = useState(false);
   const [quizData, setQuizData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(1);
 
   const getQuizzes = async () => {
     setLoading(true);
@@ -84,7 +84,7 @@ export const QuizSection = () => {
       {step === 4 && (
         <TestResult
           backToHome={() => router.push("/")}
-          restart={() => setStep(3)}
+          restart={() => router.push("/")}
         />
       )}
     </div>

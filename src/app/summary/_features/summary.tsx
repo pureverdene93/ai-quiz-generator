@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Title } from "../_components/title";
-import { PreIcon } from "../_icons/preIcon";
-import { SummarizedIcon } from "../_icons/summarizedIcon";
-import { ContextHistory } from "../_components/contentHistory";
+
 import { Spinner } from "@/components/ui/spinner";
+import { PreIcon } from "@/app/_icons/preIcon";
+import { Title } from "@/app/_components/title";
+import { SummarizedIcon } from "@/app/_icons/summarizedIcon";
+import { ContextHistory } from "@/app/_components/contentHistory";
 
 type MyProps = {
   goPrev: () => void;
-  takeTest: () => void;
 };
 
 type ArticleData = {
@@ -19,7 +19,7 @@ type ArticleData = {
   summary: string;
 };
 
-export const GeneratedArticle = ({ goPrev, takeTest }: MyProps) => {
+export const SummarySection = ({ goPrev }: MyProps) => {
   const router = useRouter();
   const [state, setState] = useState(false);
   const [loading, setLoading] = useState(false);

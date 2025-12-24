@@ -9,7 +9,7 @@ type MyProps = {
 export const SideBarOpened = ({ sideBarClose }: MyProps) => {
   return (
     <div
-      className={`w-[300px] h-full bg-white border-r border-zinc-200 flex flex-col p-4`}
+      className={`w-[300px] max-h-full bg-white border-r border-zinc-200 flex flex-col p-4 overflow-y-scroll`}
     >
       <div className="flex flex-col gap-2.5">
         <div className="flex items-center justify-between w-full h-10">

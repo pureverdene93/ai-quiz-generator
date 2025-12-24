@@ -1,3 +1,6 @@
+"use client";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Results } from "../_components/results";
 import { Title } from "../_components/title";
 import { BookMarkIcon } from "../_icons/bookMarkIcon";
@@ -7,8 +10,27 @@ type MyProps = {
   backToHome: () => void;
   restart: () => void;
 };
+type MyResults = {
+  question: string;
+  yourAnswer: string;
+  correctAnswer: string;
+  correct: boolean;
+};
 
 export const TestResult = ({ backToHome, restart }: MyProps) => {
+  const [results, setResults] = useState<MyResults[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("quick test");
+    if (stored) {
+      setResults(JSON.parse(stored));
+    }
+  }, []);
+
+  const numOfCorrAnswer = results.filter((cor) => cor.correct).length;
+
+  console.log(results, "results");
+
   return (
     <div className="w-full h-full bg-zinc-100 flex flex-col gap-6 items-center pt-[120px]">
       <div className="flex flex-col w-[428px] h-16 justify-between">
@@ -19,15 +41,13 @@ export const TestResult = ({ backToHome, restart }: MyProps) => {
       </div>
       <div className="w-[428px] h-[528px] bg-white rounded-lg border border-zinc-200 p-7 flex flex-col gap-7">
         <p className="text-black text-[24px] font-medium">
-          Your score: 2
+          Your score: {numOfCorrAnswer}
           <span className="text-[16px] text-zinc-400 font-normal">/ 5</span>
         </p>
-        <div className="flex flex-col justify-between h-[344px]">
-          <Results />
-          <Results />
-          <Results />
-          <Results />
-          <Results />
+        <div className="flex flex-col justify-between h-[344px] overflow-y-scroll">
+          {results.map((data, index) => {
+            return <Results key={index} data={data} quesNumber={index + 1} />;
+          })}
         </div>
         <div className="w-full flex justify-between">
           <button

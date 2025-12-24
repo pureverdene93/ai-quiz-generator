@@ -1,17 +1,14 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Title } from "../_components/title";
 import { ArticleIcon } from "../_icons/articleIcon";
 import { Spinner } from "@/components/ui/spinner";
 
-type MyProps = {
-  generateFinished: () => void;
-};
-
-export const ArticleGenerator = ({ generateFinished }: MyProps) => {
+export const ArticleGenerator = () => {
+  const router = useRouter();
   const [articleTitle, setArticleTitle] = useState("");
   const [artcileContent, setArticleContent] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const returnArticle = async () => {
@@ -32,7 +29,7 @@ export const ArticleGenerator = ({ generateFinished }: MyProps) => {
       console.error(err, "error from client");
     } finally {
       setLoading(false);
-      generateFinished();
+      router.push(`/summary`);
     }
   };
 

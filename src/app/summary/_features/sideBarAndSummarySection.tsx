@@ -1,10 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { SideBarOpened } from "@/app/_features/sideBarOpened";
+import { SideBarIcon } from "@/app/_icons/sideBarIcon";
 import { useState } from "react";
-import { SideBarIcon } from "../_icons/sideBarIcon";
-import { SideBarOpened } from "./sideBarOpened";
-import { ArticleGenerator } from "./articleGenerator";
+import { SummarySection } from "./summary";
 
-export const SideBarAndGenerator = () => {
+export const SideBarAndSummarySection = () => {
+  const router = useRouter();
   const [sideBarState, setSideBarState] = useState(false);
 
   return (
@@ -26,7 +28,7 @@ export const SideBarAndGenerator = () => {
           </button>
         )}
       </div>
-      <ArticleGenerator />
+      <SummarySection goPrev={() => router.push("/")} />
     </div>
   );
 };
