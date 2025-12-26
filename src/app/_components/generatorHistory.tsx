@@ -20,9 +20,12 @@ export const GeneratorHistoy = () => {
     const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     try {
-      const res = await fetch(`/api/getArticlesByUserId?userId=test1`, {
-        signal: controller.signal,
-      });
+      const res = await fetch(
+        `/api/getArticlesByUserId?userId=user_37N8A5EUheBhiWeUAo3DS1rbwCv`,
+        {
+          signal: controller.signal,
+        }
+      );
       const data = await res.json();
       setArticleData(data.articles);
     } catch (err: any) {

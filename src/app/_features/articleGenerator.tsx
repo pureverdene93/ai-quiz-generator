@@ -22,7 +22,7 @@ export const ArticleGenerator = () => {
         body: JSON.stringify({
           title: articleTitle,
           content: artcileContent,
-          userId: "test1",
+          userId: "user_37N8A5EUheBhiWeUAo3DS1rbwCv",
         }),
       });
     } catch (err) {
