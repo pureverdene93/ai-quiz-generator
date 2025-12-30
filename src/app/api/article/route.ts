@@ -30,3 +30,24 @@ export const GET = async (req: Request) => {
   });
   return Response.json(getQuizzes, { status: 200 });
 };
+
+// try {
+//   const event = await verifyWebhook(req);
+//   if (event.type === "user.created") {
+//     const user = event.data;
+//     await prisma.user.create({
+//       data: {
+//         clerkId: user.id,
+//         email: user.email_addresses?.[0]?.email_address ?? "",
+//         name: user.first_name ?? "",
+//       },
+//     });
+//   }
+//   return NextResponse.json({ ok: true });
+// } catch (err) {
+//   console.log(err, "psda zailoo alaa har gichii min pyzda lalar");
+//   return NextResponse.json(
+//     { err: "psda zail2 gichii zail psda" },
+//     { status: 500 }
+//   );
+// }const
