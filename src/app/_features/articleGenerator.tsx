@@ -43,7 +43,7 @@ export const ArticleGenerator = () => {
         body: JSON.stringify({
           title: articleTitle,
           content: artcileContent,
-          userId: "test1",
+          userId: "cmjqw2rxp0001ap72t4mtcpkq",
         }),
       });
     } catch (err) {
