@@ -47,7 +47,6 @@ export const Contents = () => {
   const quizGenerator = async () => {
     const artcile = articleData[0];
     if (!artcile) return;
-    console.log(artcile, "i use this");
     setLoading(true);
     try {
       const data = await (
