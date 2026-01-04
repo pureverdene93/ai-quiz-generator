@@ -10,6 +10,20 @@ export const ArticleGenerator = () => {
   const [articleTitle, setArticleTitle] = useState("");
   const [artcileContent, setArticleContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const getUser = async () => {
+    try {
+      const data = await (
+        await fetch(`/api/user`, {
+          method: "GET",
+        })
+      ).json();
+      setUserId(data.id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const returnArticle = async () => {
     if (!articleTitle) return;
@@ -22,7 +36,7 @@ export const ArticleGenerator = () => {
         body: JSON.stringify({
           title: articleTitle,
           content: artcileContent,
-          userId: "test1",
+          userId: userId,
         }),
       });
     } catch (err) {
@@ -32,6 +46,10 @@ export const ArticleGenerator = () => {
       router.push(`/summary`);
     }
   };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div className="w-full h-full bg-zinc-100 flex justify-center pt-12">

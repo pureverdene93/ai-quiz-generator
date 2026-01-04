@@ -12,19 +12,33 @@ type Article = {
 export const GeneratorHistoy = () => {
   const router = useRouter();
   const [articleData, setArticleData] = useState<Article[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const getUser = async () => {
+    try {
+      const data = await (
+        await fetch(`/api/user`, {
+          method: "GET",
+        })
+      ).json();
+      setUserId(data.id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fetchData = async () => {
     setLoading(true);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
-
     try {
-      const res = await fetch(`/api/getArticlesByUserId?userId=test1`, {
+      const res = await fetch(`/api/getArticlesByUserId?userId=${userId}`, {
         signal: controller.signal,
       });
       const data = await res.json();
       setArticleData(data.articles);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.name === "AbortError") {
         console.error("Fetch timeout");
@@ -38,8 +52,12 @@ export const GeneratorHistoy = () => {
   };
 
   useEffect(() => {
+    getUser();
     fetchData();
   }, []);
+
+  console.log(articleData, "this is article data");
+  console.log(userId, "user id");
 
   const now = new Date();
 
