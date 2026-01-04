@@ -50,14 +50,13 @@ export const GeneratorHistoy = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     getUser();
-    fetchData();
   }, []);
 
-  console.log(articleData, "this is article data");
-  console.log(userId, "user id");
+  useEffect(() => {
+    if (userId) fetchData();
+  }, [userId]);
 
   const now = new Date();
 

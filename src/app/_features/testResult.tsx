@@ -49,8 +49,6 @@ export const TestResult = ({
 
   const numOfCorrAnswer = results.filter((cor) => cor.correct).length;
 
-  console.log(results, "results");
-
   return (
     <div className="w-full h-full bg-zinc-100 flex flex-col gap-6 items-center pt-[120px]">
       <div className="flex flex-col w-[428px] h-16 justify-between">

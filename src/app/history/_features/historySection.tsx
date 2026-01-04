@@ -1,12 +1,11 @@
 "use client";
 import { SideBarOpened } from "@/app/_features/sideBarOpened";
 import { SideBarIcon } from "@/app/_icons/sideBarIcon";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Contents } from "./contents";
 
 export const HistorySection = () => {
   const [sideBarState, setSideBarState] = useState(false);
-  const [step, setStep] = useState(1);
 
   return (
     <div className="flex w-full h-full">

@@ -66,8 +66,6 @@ export const SummarySection = ({ goPrev }: MyProps) => {
 
   if (!articleData) return;
 
-  console.log(articleData, "article data is here");
-
   return (
     <div className="w-full h-full flex flex-col bg-zinc-100 pt-12 items-center gap-6">
       <div className="flex justify-start w-[856px]">

@@ -4,6 +4,7 @@ import { Title } from "@/app/_components/title";
 import { ExitIcon } from "@/app/_icons/exitIcon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Quiz = {
   options: string[];
@@ -25,6 +26,7 @@ export const QuickTestFromHistory = ({
   total,
   loading,
 }: MyProps) => {
+  const router = useRouter();
   const [restartQuizState, setRestartQuizState] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -41,7 +43,6 @@ export const QuickTestFromHistory = ({
     localStorage.setItem("quick test", JSON.stringify([...prev, result]));
     onNext();
   };
-  console.log(selectedOption, "local storage data");
 
   return (
     <div className="w-full h-full bg-zinc-100 flex justify-center pt-[120px]">
@@ -60,7 +61,13 @@ export const QuickTestFromHistory = ({
             <ExitIcon />
           </button>
           {restartQuizState && (
-            <RestartQuiz goBack={() => setRestartQuizState(false)} />
+            <RestartQuiz
+              goHome={() => {
+                localStorage.removeItem("quick test");
+                router.push("/");
+              }}
+              goBack={() => setRestartQuizState(false)}
+            />
           )}
         </div>
         {loading === true ? (

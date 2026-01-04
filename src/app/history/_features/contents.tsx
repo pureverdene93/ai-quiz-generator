@@ -69,12 +69,10 @@ export const Contents = () => {
       setLoading(false);
     }
   };
-  console.log(quizData, "quiz data is here");
 
   useEffect(() => {
     fetchData();
   }, [id]);
-  console.log(articleData, "this is article data");
 
   return (
     <div className="w-full h-full flex flex-col items-center bg-zinc-100 pt-28 gap-6">
